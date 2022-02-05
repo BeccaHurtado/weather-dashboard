@@ -1,5 +1,7 @@
 var userForm = document.querySelector("#user-form")
 var inputValue = document.querySelector("#input-value")
+var currentWeatherContainerEl = document.querySelector("#current-weather-container");
+var currentWeatherEl = document.querySelector("#current-weather");
 var city = "";
 
 var getWeather = function(city) {
@@ -8,7 +10,7 @@ var getWeather = function(city) {
 
     fetch(apiUrl).then(function(response) {
         response.json().then(function(data) {
-            console.log(data, city)
+            displayWeather(data, city)
         });
     });
 };
@@ -22,6 +24,31 @@ var formSubmitHandler = function(event) {
     } else {
         alert("Please Enter a City Name");
     }
+};
+
+var displayWeather = function(weather, searchTerm) {
+    console.log(weather);
+    console.log(searchTerm);
+
+    //clear old content
+    currentWeatherContainerEl.textContent = "";
+    currentWeatherEl.textContent = searchTerm;
+
+    var cityEl = document.createElement("div");
+    // cityEl.classList = "list-item flex-row justify-space-between align-center";
+
+    var titleEl = document.createElement("span");
+    titleEl.textContent = city;
+    cityEl.appendChild(titleEl);
+    currentWeatherContainerEl.appendChild(cityEl);
+
+    var tempEl = document.createElement("span");
+    tempEl.textContent = "Temp: " + weather.temp
+    tempEl.classList = "list-item flex-row justify-space-between align-center";
+    currentWeatherContainerEl.appendChild(cityEl);
+
+    
+    
 }
 
 userForm.addEventListener("submit", formSubmitHandler)
