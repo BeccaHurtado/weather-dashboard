@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <title>Weather Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1 class="p-3 bg-primary text-white text-center">Weather Dashboard</h1>
+    </header>
+
+    <main class="flex-row justify-space-between">
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <form id="user-form" class="card-body">
+                    <label class="text-center form-label" for="city-textarea">Search For a City:</label>
+                    <input name="input-value" id="input-value" type="text" autofocus="true" class="form-control text-center" placeholder="Enter City Name Here" />
+                    <button type="submit" id="btn" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="content-right">
+            <div id="current-weather"></div>
+            <div id="five-days"></div>
+
+        </div>
+        
+    </main>
+
+<script src="./assets/js/script.js"></script>
+</body>
+</html>

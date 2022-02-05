@@ -1,0 +1,17 @@
+.btn {
+    font-size: 1.3rem; 
+    padding: 6px 5px;
+    width: 100%;
+    display: block;
+    margin: 5px 0;    
+  }
+  
+  .form-input {
+      width: 100%;
+      margin-bottom: 5px;
+  }
+
+  .form-label {
+      font-size: 30px;
+      font-weight: 700;
+  }
