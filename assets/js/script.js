@@ -35,6 +35,9 @@ var formSubmitHandler = function(event) {
     var city = inputValue.value;
     if (city) {
         getWeather(city);
+        var previousSearch = JSON.parse(localStorage.getItem("weather-dashboard")) || []
+        previousSearch.push(city)
+        localStorage.setItem("weather-dashboard", JSON.stringify(previousSearch))
         inputValue.value = "";   
     } else {
         alert("Please Enter a City Name");
