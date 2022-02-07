@@ -1,3 +1,17 @@
+var today = new Date()
+var dd = today.getDate()
+var mm = today.getMonth()+1
+var yyyy = today.getFullYear();
+if(dd<10)
+{
+    dd='0'+dd
+}
+if(mm<10)
+{
+    mm='0'+mm
+}
+today = mm+'/'+dd+'/'+yyyy
+console.log(today)
 var userForm = document.querySelector("#user-form")
 var inputValue = document.querySelector("#input-value")
 var currentWeatherContainerEl = document.querySelector("#current-weather-container");
@@ -36,8 +50,11 @@ var formSubmitHandler = function(event) {
     if (city) {
         getWeather(city);
         var previousSearch = JSON.parse(localStorage.getItem("weather-dashboard")) || []
+        if (previousSearch.indexOf(city) === -1){
         previousSearch.push(city)
         localStorage.setItem("weather-dashboard", JSON.stringify(previousSearch))
+        displayPreviousSearch();
+        }
         inputValue.value = "";   
     } else {
         alert("Please Enter a City Name");
@@ -55,12 +72,12 @@ var displayWeather = function(weather, searchTerm) {
     currentWeatherContainerEl.textContent = "";
 
     var searchTermEl = document.createElement("div");
-    searchTermEl.textContent = searchTerm
+    searchTermEl.textContent = searchTerm + "(" + today + ")"
     searchTermEl.classList = "h1 text-capitalize";
     currentWeatherContainerEl.appendChild(searchTermEl);
 
     var tempEl = document.createElement("div");
-    tempEl.textContent = "Temp: " + weather.main.temp
+    tempEl.textContent = "Temp: " + weather.main.temp + " ºF"
     tempEl.classList = "list-item flex-row justify-space between align-center pb-3 pt-3";
     currentWeatherContainerEl.appendChild(tempEl); 
 
@@ -79,13 +96,15 @@ var displayWeather = function(weather, searchTerm) {
     descriptionEl.classList = "list-item flex-row justify-space between align-center pb-3 pt-3";
     currentWeatherContainerEl.appendChild(descriptionEl);
     
-    var imgEl = document.createElement("img");
-    imgEl.src= `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`
-    currentWeatherContainerEl.appendChild(imgEl);
+    // var imgEl = document.createElement("img");
+    // imgEl.src= `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`
+    // currentWeatherContainerEl.appendChild(imgEl);
+
 }
 
 function forecast (lat, lon, city) {
-    var apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=currentminutelyhourlyalerts&appid=${apiKey}`
+    var apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=currentminutelyhourlyalerts&appid=${apiKey}&units=imperial`
+    
     fetch(apiUrl)
     .then(function(response) {
         // request was successful
@@ -95,14 +114,14 @@ function forecast (lat, lon, city) {
                 console.log(data);
                 var html = ""
                 for (i=0; i < 5; i++) {
-                    html += `<div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
+                    html += `<div class="card row no-gutters";">
+                    <div class="card-body w-100">
+                      <h5 class="card-title">${data.daily[i].dt}</h5>
                       <h6 class="card-subtitle mb-2 text-muted">Description:${data.daily[i].weather[0].description} <img src="https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png"></h6>
-                      <p class="card-text">Temp:${data.daily[i].temp.max}</p>
-                      <p class="card-text">Humidity:${data.daily[i].humidity}</p>
-                      <p class="card-text">Uvi:${data.daily[i].uvi}</p>
-                      <p class="card-text">Wind:${data.daily[i].wind_speed}</p>
+                      <p class="card-text">Temp: ${data.daily[i].temp.max} ºF</p>
+                      <p class="card-text">Humidity: ${data.daily[i].humidity}</p>
+                      <p class="card-text">Uvi: ${data.daily[i].uvi}</p>
+                      <p class="card-text">Wind: ${data.daily[i].wind_speed} MPH</p>
                     
                     </div>
                   </div>`
@@ -118,6 +137,15 @@ function forecast (lat, lon, city) {
     });
 };
 
+function displayPreviousSearch(){
+    var pastHTML = ""
+    var previousSearch = JSON.parse(localStorage.getItem("weather-dashboard")) || []
+    for (i=0; i< previousSearch.length; i++) {
+        pastHTML += `<p><button class="past-search">${previousSearch[i]}</button></p>`
+    } 
+    document.getElementById("past-searches").innerHTML = pastHTML;
+}
+displayPreviousSearch();
 
 userForm.addEventListener("submit", formSubmitHandler)
 
