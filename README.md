@@ -8,7 +8,7 @@ HTML, CSS, and JavaScript.
 ![Screenshot](./assets/img/screenshot.png)
 
 ## Link to website:
-
+https://beccahurtado.github.io/weather-dashboard/
 
 ### Created By :
 Rebecca Hurtado
