@@ -19,7 +19,7 @@ var city = "";
 var apiKey = "470f34996c61230089cdebe6c704b095"
 
 var getWeather = function(city) {
-    var apiUrl = "HTTPs://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey +"&units=imperial"
+    var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey +"&units=imperial"
 
     // make a request to the url
     fetch(apiUrl)
@@ -103,7 +103,7 @@ var displayWeather = function(weather, searchTerm) {
 }
 
 function forecast (lat, lon, city) {
-    var apiUrl = `HTTPs://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=currentminutelyhourlyalerts&appid=${apiKey}&units=imperial`
+    var apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=currentminutelyhourlyalerts&appid=${apiKey}&units=imperial`
     
     fetch(apiUrl)
     .then(function(response) {
@@ -117,7 +117,7 @@ function forecast (lat, lon, city) {
                     html += `<div class="card row no-gutters";">
                     <div class="card-body w-100">
                       <h5 class="card-title">${data.daily[i].dt}</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">Description:${data.daily[i].weather[0].description} <img src="HTTPs://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png"></h6>
+                      <h6 class="card-subtitle mb-2 text-muted">Description:${data.daily[i].weather[0].description} <img src="https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png"></h6>
                       <p class="card-text">Temp: ${data.daily[i].temp.max} ºF</p>
                       <p class="card-text">Humidity: ${data.daily[i].humidity}</p>
                       <p class="card-text">Uvi: ${data.daily[i].uvi}</p>
