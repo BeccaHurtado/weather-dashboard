@@ -19,7 +19,7 @@ var city = "";
 var apiKey = "470f34996c61230089cdebe6c704b095"
 
 var getWeather = function(city) {
-    var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey +"&units=imperial"
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey +"&units=imperial"
 
     // make a request to the url
     fetch(apiUrl)
