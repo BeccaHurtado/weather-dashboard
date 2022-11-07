@@ -13,6 +13,7 @@ console.log(today)
 var userForm = document.querySelector("#user-form")
 var inputValue = document.querySelector("#input-value")
 var currentWeatherContainerEl = document.querySelector("#current-weather-container");
+var pastSearchButtonEl = document.querySelector("past-search-button")
 var city = "";
 var apiKey = "470f34996c61230089cdebe6c704b095"
 
@@ -57,6 +58,8 @@ var formSubmitHandler = function (event) {
     } else {
         alert("Please Enter a City Name");
     }
+
+    pastSearch(city)
 };
 
 var displayWeather = function (weather, searchTerm) {
@@ -150,7 +153,7 @@ function forecast(lat, lon, city) {
         });
 };
 
-function displayPreviousSearch() {
+function pastSearch(previousSearch) {
     var pastHTML = ""
     var previousSearch = JSON.parse(localStorage.getItem("weather-dashboard")) || []
     for (i = 0; i < previousSearch.length; i++) {
@@ -159,9 +162,17 @@ function displayPreviousSearch() {
     document.getElementById("past-searches").innerHTML = pastHTML;
 
 }
-displayPreviousSearch();
+
+var pastSearchHandler = function(event) {
+    var city = event.target.getAttribute("data-city")
+    if (city) {
+        displayWeather()
+        forecast()
+    }
+}
 
 userForm.addEventListener("submit", formSubmitHandler)
+pastSearchButtonEl.addEventListener("click", pastSearchHandler)
 
 
 
