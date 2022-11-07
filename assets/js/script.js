@@ -70,9 +70,14 @@ var displayWeather = function (weather, searchTerm) {
     currentWeatherContainerEl.textContent = "";
 
     var searchTermEl = document.createElement("div");
-    searchTermEl.textContent = searchTerm + "(" + today + ")"
-    searchTermEl.classList = "h1 text-capitalize";
+    searchTermEl.textContent = searchTerm
+    searchTermEl.classList = "h1 text-capitalize current-weather-title";
     currentWeatherContainerEl.appendChild(searchTermEl);
+
+    var searchDate = document.createElement("div");
+    searchDate.textContent = today
+    searchDate.classList = "list-item flex-row justify-space between align-center pb-3 pt-3";
+    currentWeatherContainerEl.appendChild(searchDate);
 
     var tempEl = document.createElement("div");
     tempEl.textContent = "Temp: " + weather.main.temp + " ºF"
@@ -110,26 +115,31 @@ function forecast(lat, lon, city) {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    var html = ""
+                    var fiveDayTitle = `<div><h3>Five Day Forecast</h3></div>`
+                    var fiveDayHtml = ""
                     for (i = 0; i < 5; i++) {
                         var date = new Date(data.daily[i + 1].dt * 1000)
                         var dd = date.getDate()
                         var mm = date.getMonth() + 1
                         var yyyy = date.getFullYear();
                         date = mm + '/' + dd + '/' + yyyy
-                        html += `<div class="card row no-gutters";">
-                    <div class="card-body w-100">
-                      <h5 class="card-title">${date}</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">Description: ${data.daily[i].weather[0].description} <img src="https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png"></h6>
-                      <p class="card-text">Temp: ${data.daily[i].temp.max} ºF</p>
-                      <p class="card-text">Humidity: ${data.daily[i].humidity}</p>
-                      <p class="card-text">Uvi: ${data.daily[i].uvi}</p>
-                      <p class="card-text">Wind: ${data.daily[i].wind_speed} MPH</p>
-                    
-                    </div>
-                  </div>`
+                        fiveDayHtml += 
+                        `
+                        <div class="d-inline-flex flex-wrap>
+                        <div class="weather-card card m-2">
+                            <ul class="list-unstyled p-3">
+                                <li>${date}</li>
+                                <li>${data.daily[i].weather[0].description} <img src="https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png"></li>
+                                <li>Temp: ${data.daily[i].temp.max} ºF</li>
+                                <li>Humidity: ${data.daily[i].humidity}</li>
+                                <li>Uvi: ${data.daily[i].uvi}</li>
+                                <li: ${data.daily[i].wind_speed} MPH</li>
+                            </ul>
+                        </div>
+                        </div>
+                        `
                     }
-                    document.getElementById("5-day-forecast").innerHTML = html
+                    document.getElementById("5-day-forecast").innerHTML = fiveDayTitle + fiveDayHtml
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -144,7 +154,7 @@ function displayPreviousSearch() {
     var pastHTML = ""
     var previousSearch = JSON.parse(localStorage.getItem("weather-dashboard")) || []
     for (i = 0; i < previousSearch.length; i++) {
-        pastHTML += `<p><button class="past-search" type="click">${previousSearch[i]}</button></p>`
+        pastHTML += `<p><button class="past-search btn btn-light" type="click">${previousSearch[i]}</button></p>`
     }
     document.getElementById("past-searches").innerHTML = pastHTML;
 

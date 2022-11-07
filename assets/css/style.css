@@ -2,16 +2,52 @@
     font-size: 1.3rem; 
     padding: 6px 5px;
     width: 100%;
-    display: block;
+    display: inline-block;
     margin: 5px 0;    
   }
   
-  .form-input {
-      width: 100%;  
-  }
-
   .form-label {
       font-size: 30px;
       font-weight: 700;
+  }
+
+  #search-city {
+    width: 80%;
+  }
+
+  #5-day-forecast {
+    width: 10rem;
+    text-align: center;
+  }
+
+  .everything {
+    background-color: #CDE4FB;
+  }
+
+  .dashboard {
+    background-color: #F3F8FE;
+  }
+
+  .past-search {
+    display: flex;
+    width: 100%;
+  }
+
+  .search-title {
+    font-size: 25px;
+    color: #1074EE;
+  }
+
+  .current-weather-title {
+    /* background-color: #CDE4FB; */
+    color: #1074EE;
+    text-align: center;
+  }
+
+  .list-item {
+    background-color: #CDE4FB;
+    padding-left: 15px;
+    font-size: 20px;
+    color: #1074EE;
   }
 
